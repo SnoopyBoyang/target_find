@@ -1,0 +1,38 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: work - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPC40.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Debug/work.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"F:\work\workView.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPC40.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPC41.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/work.pdb" /debug /machine:I386 /out:"Debug/work.exe" /pdbtype:sept 
+.\Debug\CDIB.OBJ
+.\Debug\MainFrm.obj
+.\Debug\StdAfx.obj
+.\Debug\work.obj
+.\Debug\workDoc.obj
+.\Debug\workView.obj
+.\Debug\work.res
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPC41.tmp"
+<h3>Output Window</h3>
+Compiling...
+workView.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+work.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
