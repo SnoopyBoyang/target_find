@@ -1,0 +1,86 @@
+/*例如 程序中定义
+     unsigned char camera_data[150*50]={**} ;//存灰度值图像；
+	 int gray_threshold=200; 为灰度阈值=200;
+	 int isfind,target_x,target_y;自定义三个变量;由于存储目标是否发现，目标x\y坐标 isfind=1 发现目标，isfind=0没发现目标
+
+  调用函数形式为:
+  target_find(camera_data,50,150,gray_threshold,&isfind,&target_x,&target_y);
+
+
+在任何需要判断有没有找到目标时候，只要if(isfind)
+                                        {发现目标，
+										 target_x :x坐标；
+										 target_y :y坐标;
+										  
+											.....}
+									  else
+										{....}
+
+也就是target_x ，target_y存储的是你最近一次找到目标的坐标位置
+    
+ 
+
+*/                     
+
+// 图像灰度二维数组 camera_data, 宽：data_width, 高:data_height.  二值化判断阈值:gray_threshold,
+// 目标是否被发现: is_find , 目标坐标：target_x,target_y;
+void target_find(unsigned char *camera_data,int data_height,int data_width,int gray_threshold,
+	               int *is_find,int *target_x,int *target_y)
+  {
+      int x1,x2,y1,y2;                   //看示意图：x1,x2,y1,y2位置 
+/*二维数组从左到右，从上到下扫描，首先找到亮点区，先粗略定位，一旦找到亮点区后即目标发现，可以肯定两点
+	  1.有目标存在：可以执行以下目标详细坐标查找函数，否则直接跳出来，节省时间。
+	  2：目标详细坐标肯定在该粗目标附近。
+	  */
+	  for(int i=0;i<data_height;i++)
+	  {   for(int j=0;j<data_width;j++)
+		 {
+		    if(*(camera_data+i*data_width+j)>gray_threshold)
+			{
+			  x1=j;
+			  y1=i;
+			  *is_find=1;
+			  break;
+			}
+		   else
+		   {
+		    x1=0;
+		    y1=0;
+			*is_find=0;
+		   }	 
+		 }
+	 if(*is_find)
+		 break;
+     }
+/*   发现目标后，由于对数组从上到下，从左到右扫描，那么最开始发现目标的位置处（），肯定是目标边缘最上面一点y1
+	  那么从该点开始，从上向下扫描，找到由亮点变暗的一点，肯定是目标边缘下面一点y2，那么这两点坐标的中点的y坐标
+	  一定是详细目标的中点y坐标0.5*(y1+y2)。
+	  详细目标中点 x坐标一样;
+	  */
+     if(*is_find)
+	 {
+	   for(int i=x1;i<data_width;i++)
+		  if(*(camera_data+y1*data_width+i)<gray_threshold)
+		  {
+		   x2=i;
+		   break;
+		  }
+		  else
+	       x2=data_width;
+	  *target_x=(int)(0.5*(x1+x2));
+	 
+
+	 for(int j=y1;j<data_height;j++)
+		 if(*(camera_data+x1+j*data_width)<gray_threshold)
+		 {
+		  y2=j;
+		  break;
+		 }
+		else
+		  y2=data_height;
+      *target_y=(int)(0.5*(y1+y2));
+	 }    
+
+
+  }
+/////////////////////////////////////////////////////////////
